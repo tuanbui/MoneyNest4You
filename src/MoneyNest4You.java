@@ -47,7 +47,7 @@ public class MoneyNest4You extends JFrame implements TableModelListener{
 		frame.setJMenuBar(menubar);
 		JMenu file = new JMenu("File");
 		menubar.add(file);
-		ImageIcon icon = new ImageIcon("exit.gif");
+		ImageIcon icon = new ImageIcon("src/exit.png");
 		JMenuItem exit = new JMenuItem("Exit", icon);
 
 		file.add(exit);
@@ -149,4 +149,3 @@ public class MoneyNest4You extends JFrame implements TableModelListener{
 
 
 }
-
