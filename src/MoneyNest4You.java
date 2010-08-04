@@ -18,14 +18,15 @@ import java.text.NumberFormat;
 
 public class MoneyNest4You extends JFrame implements TableModelListener{
 	protected static final String[][] Object = null;
-	private static int lastRow=2;
+	private static int lastRow=1;
 	private static int firstRowNum=0;
-	private static int rowCount=2;
+	private static int rowCount=1;
 	private static float f=0;
 	//private float total=0;
 	private static int columnNum=1;
+	private static int tableLength=120;
 	JTable table;
-	
+	static DefaultTableModel model;
 	
 	public MoneyNest4You (){
 		String[] columnTitles = {"First Name",
@@ -35,14 +36,12 @@ public class MoneyNest4You extends JFrame implements TableModelListener{
 	            "Transaction Amount"};
 
 	Object[][] data = {
-	{"<html><b><font color=blue>First Name</font></b></html>", "<html><b><font color=blue>Last Name</font></b></html>",
-	"<html><b><font color=blue>Account Type</font></b></html>", "<html><b><font color=blue>Account Number</font></b></html>", "<html><b><font color=blue>Transaction Amount</font></b></html>"},
 	{"","","","", f},
 	{"<html><b><font color=blue>Total</font></b></html>","","","", f}};
 		JFrame frame = new JFrame("MoneyNest4You");
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1010, 300);
+		frame.setSize(1010, 475);
 		JMenuBar menubar = new JMenuBar();
 		frame.setJMenuBar(menubar);
 		JMenu file = new JMenu("File");
@@ -67,7 +66,7 @@ public class MoneyNest4You extends JFrame implements TableModelListener{
 		leftpane.setBackground(Color.white);
 		rightpane.setBackground(Color.gray);
 		leftpane.setLayout(new GridLayout(3,1));
-		rightpane.setLayout(new GridLayout(2,1));
+		rightpane.setLayout(new GridLayout(1,0));
 		JButton calButton = new JButton("Calculate");
 		//calButton.setPreferredSize(new Dimension(105, 50));
 		JButton predictButton = new JButton("Predict");
@@ -78,10 +77,10 @@ public class MoneyNest4You extends JFrame implements TableModelListener{
 		leftpane.add(predictButton);
 		leftpane.add(insertRowButton);
 
-		final DefaultTableModel model = new DefaultTableModel(data, columnTitles){
+		model = new DefaultTableModel(data, columnTitles){
 			 public boolean isCellEditable( int row, int col )  
 			 	{  
-				 	if ( row != firstRowNum && row!= lastRow ){  
+				 	if (row!= lastRow ){  
 				 		return true;  
 				 	}  
 				 	else {  
@@ -91,17 +90,19 @@ public class MoneyNest4You extends JFrame implements TableModelListener{
 		};
 		model.addTableModelListener(null);
 		table = new JTable(model);
-		table.setPreferredSize(new Dimension(760, 300));
+		table.setPreferredSize(new Dimension(760, tableLength));
+		table.getTableHeader().setReorderingAllowed(false); 
 		rightpane.add(table);
-		
-		JScrollPane scroll = new JScrollPane(rightpane);
-		splitpane.add(scroll);
-		
-		
+		JScrollPane scroll2 = new JScrollPane(rightpane);
+		splitpane.add(scroll2);
+		JScrollPane scroll = new JScrollPane(table);
+		rightpane.add(scroll);
 		
 		insertRowButton.addActionListener(new ActionListener(){	
 			public void actionPerformed (ActionEvent e) {
-				model.insertRow(1, new Object[]{"","","","", f});
+				tableLength+=17;
+				table.setPreferredSize(new Dimension(760, tableLength));
+				model.insertRow(0, new Object[]{"","","","", f});
 				rowCount++;
 				lastRow++;
 			}
@@ -109,14 +110,7 @@ public class MoneyNest4You extends JFrame implements TableModelListener{
 		
 		calButton.addActionListener(new ActionListener(){	
 			public void actionPerformed (ActionEvent e) {
-					double total=0;
-					int i=1;
-				while(i<lastRow){
-					Object value = model.getValueAt(i, 4 );
-				    total =  total + Double.parseDouble( String.valueOf( value ) );
-				    i++;
-				}
-				model.setValueAt(total, lastRow, 4 );
+				update();
 			}
 		});
 		
@@ -130,14 +124,17 @@ public class MoneyNest4You extends JFrame implements TableModelListener{
 		exit.addActionListener(new exitaction());
 	}
 	
-
+	public static void update(){
+		double total=0;
+		for(int i=0; i<lastRow; i++){
+			Object value = model.getValueAt(i, 4 );
+		    total =  total + Double.parseDouble( String.valueOf( value ) );
+		}
+		model.setValueAt(total, lastRow, 4 );
+	}
 	public static void main(String[] args)
 	{
 		MoneyNest4You mn4y = new MoneyNest4You();
-		mn4y.setDefaultCloseOperation( EXIT_ON_CLOSE );
-		mn4y.pack();
-		mn4y.setLocationRelativeTo( null );
-		mn4y.setVisible(true);
 	}
 
 
