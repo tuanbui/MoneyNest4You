@@ -8,3 +8,24 @@ Redistribution and use in source and binary forms, with or without modification,
     * Neither the name of the MoneyNest4You nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+---MoneyNest4You---
+Version: 1.0
+
+This application was tested and ran on Ubuntu 10.04 LTS.
+
+Instructions.
+
+-Before downloading all files inside src folder, install Eclipse or NetBeans IDE.
+
+-After Eclipse or NetBeans IDE is installed download all files inside src folder.
+
+The following instruction is for Eclipse user. NetBeans IDE instructions are similiar.
+
+-Open Eclipse, and create new project.
+
+-Place all files inside src folder in the new project.
+
+-Use Eclipe to build and run application.
+
+-Once application is build and run successfully, you already to use MoneyNest4You.
