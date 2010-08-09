@@ -22,11 +22,13 @@
  */
 
 /* 
- * About.java
- * Details about MoneyNest4You 
+ * Predict.java
+ * With total amount and row count, Predict function calculates 
+ * and print approximate amount. 
  */
 
 import java.awt.FlowLayout;
+import java.text.DecimalFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -36,19 +38,24 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
-public class About {
-	public About(){
-		JFrame frame = new JFrame("About");		
-		String s = "<html>MoneyNest4You<br><br>Version: 1.0<br><br>(c) 2010, Tuan Bui. All rights reserved.<br><br>Everyone is permitted to copy and distribute <br>verbatim copies of this license document, <br>but changing it is not allowed.</html>";
-		ImageIcon icon = new ImageIcon("src/moneynest4yout.jpg");
-		JLabel label = new JLabel(s);
-		label.setVerticalAlignment(SwingConstants.TOP);
-		label.setIcon(icon);
-		frame.setSize(530,220);
-		frame.add(label);
+public class Predict {
+	double approx = 0;
+	String s1 = "<html>From the transaction table,<br> your next expenditure<br> will be:</html>";
+	public Predict(double total, int count){
+		JFrame frame = new JFrame("About");
+		approx = total / (count-1);
+		DecimalFormat df = new DecimalFormat("0.00");
+		df.setMinimumFractionDigits(2);
+		JLabel label1 = new JLabel(s1, SwingConstants.CENTER);
+		JLabel label2 = new JLabel("$"+String.valueOf(df.format(approx)), SwingConstants.CENTER);
+		label1.setVerticalAlignment(SwingConstants.TOP);
+		frame.setSize(270,170);
+		frame.add(label1);
+		frame.add(label2);
 		frame.setVisible(true);	
 		
-		JScrollPane scroll = new JScrollPane(label);
+		JScrollPane scroll = new JScrollPane(label1);
 		frame.add(scroll);
 	}
+	
 }
