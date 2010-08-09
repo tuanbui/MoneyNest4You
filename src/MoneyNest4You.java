@@ -16,40 +16,50 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.text.NumberFormat;
 
+import java.io.*;
+
 public class MoneyNest4You extends JFrame implements TableModelListener{
 	protected static final String[][] Object = null;
-	private static int lastRow=1;
+	private static int lastRow=2;
 	private static int firstRowNum=0;
-	private static int rowCount=1;
-	private static float f=0;
-	//private float total=0;
-	private static int columnNum=1;
+	private static int rowCount=2;
 	private static int tableLength=120;
 	JTable table;
+	double[] num = new double[5];
 	static DefaultTableModel model;
+	
 	
 	public MoneyNest4You (){
 		String[] columnTitles = {"First Name",
-	            "Last Name",
-	            "Account Type",
-	            "Account Number",
-	            "Transaction Amount"};
+								"Last Name",
+								"Account Type",
+								"Account Number",
+								"Transaction Amount"};
 
-	Object[][] data = {
-	{"","","","", f},
-	{"<html><b><font color=blue>Total</font></b></html>","","","", f}};
+		Object[][] data = {
+							{"<html><b><font color=blue>First Name</font></b></html>", "<html><b><font color=blue>Last Name</font></b></html>",
+								"<html><b><font color=blue>Account Type</font></b></html>", "<html><b><font color=blue>Account Number</font></b></html>", "<html><b><font color=blue>Transaction Amount</font></b></html>"},
+							{"","","","", new Double(0)},
+							{"<html><b><font color=blue>Total</font></b></html>","","","", new Double(0)}};
 		JFrame frame = new JFrame("MoneyNest4You");
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1010, 475);
+		frame.setSize(930, 300);
+		frame.pack();
 		JMenuBar menubar = new JMenuBar();
 		frame.setJMenuBar(menubar);
 		JMenu file = new JMenu("File");
 		menubar.add(file);
-		ImageIcon icon = new ImageIcon("src/exit.png");
-		JMenuItem exit = new JMenuItem("Exit", icon);
-
+		ImageIcon exitIcon = new ImageIcon("src/exit.png");
+		ImageIcon saveIcon = new ImageIcon("src/saveIcon.png");
+		JMenuItem save = new JMenuItem("Save", saveIcon);
+		file.add(save);
+		JMenuItem exit = new JMenuItem("Exit", exitIcon);
 		file.add(exit);
+		
+		JMenu options = new JMenu("Options");
+		menubar.add(options);
+		JMenuItem graph = new JMenuItem("Graph");
+		options.add(graph);
 		
 		JMenu help = new JMenu("Help");
 		menubar.add(help);
@@ -62,17 +72,13 @@ public class MoneyNest4You extends JFrame implements TableModelListener{
 		JSplitPane splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftpane, rightpane);
 		frame.add(splitpane);
 		splitpane.setOneTouchExpandable(true);
-		splitpane.setDividerLocation(200);
+		splitpane.setDividerLocation(210);
 		leftpane.setBackground(Color.white);
 		rightpane.setBackground(Color.gray);
 		leftpane.setLayout(new GridLayout(3,1));
-		rightpane.setLayout(new GridLayout(1,0));
 		JButton calButton = new JButton("Calculate");
-		//calButton.setPreferredSize(new Dimension(105, 50));
 		JButton predictButton = new JButton("Predict");
-		//predictButton.setPreferredSize(new Dimension(105, 50));
 		JButton insertRowButton = new JButton("Insert Row");
-		//insertRowButton.setPreferredSize(new Dimension(105, 50));
 		leftpane.add(calButton);
 		leftpane.add(predictButton);
 		leftpane.add(insertRowButton);
@@ -80,37 +86,82 @@ public class MoneyNest4You extends JFrame implements TableModelListener{
 		model = new DefaultTableModel(data, columnTitles){
 			 public boolean isCellEditable( int row, int col )  
 			 	{  
-				 	if (row!= lastRow ){  
+				 	if ( row != firstRowNum && row!= lastRow ){  
 				 		return true;  
 				 	}  
 				 	else {  
 				 		return false;  
 				 	}  
-			 	}  
+			 }  
 		};
 		model.addTableModelListener(null);
 		table = new JTable(model);
-		table.setPreferredSize(new Dimension(760, tableLength));
-		table.getTableHeader().setReorderingAllowed(false); 
+		table.setPreferredSize(new Dimension(750, tableLength));
 		rightpane.add(table);
-		JScrollPane scroll2 = new JScrollPane(rightpane);
-		splitpane.add(scroll2);
-		JScrollPane scroll = new JScrollPane(table);
-		rightpane.add(scroll);
+		
+		JScrollPane scroll = new JScrollPane(rightpane);
+		splitpane.add(scroll);
+		
 		
 		insertRowButton.addActionListener(new ActionListener(){	
 			public void actionPerformed (ActionEvent e) {
-				tableLength+=17;
-				table.setPreferredSize(new Dimension(760, tableLength));
-				model.insertRow(0, new Object[]{"","","","", f});
+				tableLength += 20;
+				table.setPreferredSize(new Dimension(750, tableLength));
+				model.insertRow(1, new Object[]{"","","","", new Double(0)});
 				rowCount++;
 				lastRow++;
 			}
 		});		
 		
-		calButton.addActionListener(new ActionListener(){	
+		about.addActionListener(new ActionListener(){	
 			public void actionPerformed (ActionEvent e) {
-				update();
+				About about2 = new About();
+			}
+		});	
+		
+		calButton.addActionListener(new ActionListener(){	
+			public void actionPerformed (ActionEvent e){
+					update();
+			}
+		});
+		
+		save.addActionListener(new ActionListener(){	
+			public void actionPerformed (ActionEvent e){
+					Writer output = null;
+				    try {
+						output = new BufferedWriter(new FileWriter("MoneyNest4You.txt")); 
+					} catch (IOException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+				    try {
+				    	for(int i=1; i<lastRow;i++){
+							Object first = model.getValueAt(i, 0 );
+							Object last = model.getValueAt(i, 1 );
+							Object acct_type = model.getValueAt(i, 2 );
+							Object acct_num = model.getValueAt(i, 3 );
+							Object amount = model.getValueAt(i, 4 );
+							output.write(String.valueOf( first ));
+							output.write(" ");
+							output.write(String.valueOf( last ));
+							output.write(" ");
+							output.write(String.valueOf( acct_type ));
+							output.write(" ");
+							output.write(String.valueOf( acct_num ));
+							output.write(" ");
+							output.write(String.valueOf( amount ));
+							output.write("\n");
+						}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				    try {
+						output.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 			}
 		});
 		
@@ -124,14 +175,14 @@ public class MoneyNest4You extends JFrame implements TableModelListener{
 		exit.addActionListener(new exitaction());
 	}
 	
-	public static void update(){
-		double total=0;
-		for(int i=0; i<lastRow; i++){
+    public static void update(){
+    	double total=0;
+		for(int i=1; i<lastRow;i++){
 			Object value = model.getValueAt(i, 4 );
-		    total =  total + Double.parseDouble( String.valueOf( value ) );
+		    total += Double.parseDouble( String.valueOf( value ) );
 		}
 		model.setValueAt(total, lastRow, 4 );
-	}
+    }
 	public static void main(String[] args)
 	{
 		MoneyNest4You mn4y = new MoneyNest4You();
