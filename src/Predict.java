@@ -42,7 +42,7 @@ public class Predict {
 	double approx = 0;
 	String s1 = "<html>From the transaction table,<br> your next expenditure<br> will be:</html>";
 	public Predict(double total, int count){
-		JFrame frame = new JFrame("About");
+		JFrame frame = new JFrame("Predict");
 		approx = total / (count-1);
 		DecimalFormat df = new DecimalFormat("0.00");
 		df.setMinimumFractionDigits(2);

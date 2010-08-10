@@ -48,6 +48,7 @@ import java.awt.event.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import java.io.*;
@@ -285,7 +286,9 @@ public class MoneyNest4You extends JFrame implements TableModelListener{
 			Object value = model.getValueAt(i, 4 );
 		    total += Double.parseDouble( String.valueOf( value ) );
 		}
-		model.setValueAt(total, lastRow, 4 );
+		DecimalFormat df = new DecimalFormat("0.00");
+		df.setMinimumFractionDigits(2);
+		model.setValueAt(df.format(total), lastRow, 4 );
     }
     
     /*
