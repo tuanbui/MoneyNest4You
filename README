@@ -20,7 +20,7 @@ Instructions.
 
 -After Eclipse or NetBeans IDE is installed download all files inside src folder.
 
-The following instruction is for Eclipse user. NetBeans IDE instructions are similiar.
+The following instruction is for Eclipse user. NetBeans IDE instructions are similar.
 
 -Open Eclipse, and create new project.
 
@@ -28,4 +28,4 @@ The following instruction is for Eclipse user. NetBeans IDE instructions are sim
 
 -Use Eclipe to build and run application.
 
--Once application is build and run successfully, you already to use MoneyNest4You.
+-Once application is build and run successfully, you are now ready to use MoneyNest4You.
