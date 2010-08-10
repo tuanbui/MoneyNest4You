@@ -40,7 +40,7 @@ public class About {
 	public About(){
 		JFrame frame = new JFrame("About");		
 		String s = "<html>MoneyNest4You<br><br>Version: 1.0<br><br>(c) 2010, Tuan Bui. All rights reserved.<br><br>Everyone is permitted to copy and distribute <br>verbatim copies of this license document, <br>but changing it is not allowed.</html>";
-		ImageIcon icon = new ImageIcon("src/moneynest4yout.jpg");
+		ImageIcon icon = new ImageIcon("src/moneynest4you.jpg");
 		JLabel label = new JLabel(s);
 		label.setVerticalAlignment(SwingConstants.TOP);
 		label.setIcon(icon);
