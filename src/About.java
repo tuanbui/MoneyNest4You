@@ -39,12 +39,12 @@ import javax.swing.SwingConstants;
 public class About {
 	public About(){
 		JFrame frame = new JFrame("About");		
-		String s = "<html>MoneyNest4You<br><br>Version: 1.0<br><br>(c) 2010, Tuan Bui. All rights reserved.<br><br>Everyone is permitted to copy and distribute <br>verbatim copies of this license document, <br>but changing it is not allowed.</html>";
+		String s = "<html>MoneyNest4You<br><br>Version: 1.0<br><br>Copyright &copy 2010, Tuan Bui. All rights reserved.</html>";
 		ImageIcon icon = new ImageIcon("src/moneynest4you.jpg");
 		JLabel label = new JLabel(s);
 		label.setVerticalAlignment(SwingConstants.TOP);
 		label.setIcon(icon);
-		frame.setSize(530,220);
+		frame.setSize(530,205);
 		frame.add(label);
 		frame.setVisible(true);	
 		
